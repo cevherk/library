@@ -113,7 +113,7 @@ const libraryData = [
         "pages": "117",
         "publisher": "",
         "ibrahimRead": "7.03.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -185,7 +185,7 @@ const libraryData = [
         "pages": "331",
         "publisher": "kırmızı kedi yayınevi",
         "ibrahimRead": "5.03.2022",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -221,7 +221,7 @@ const libraryData = [
         "pages": "263",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -238,8 +238,8 @@ const libraryData = [
         "author": "PAULO COELHO",
         "pages": "188",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "16.05.2016",
+        "esraRead": "Okundu",
         "notes": "ERDEMDE"
     },
     {
@@ -257,7 +257,7 @@ const libraryData = [
         "pages": "110",
         "publisher": "",
         "ibrahimRead": "10.03.2021",
-        "esraRead": "",
+        "esraRead": "1.06.2017",
         "notes": ""
     },
     {
@@ -266,7 +266,7 @@ const libraryData = [
         "pages": "263",
         "publisher": "",
         "ibrahimRead": "7.02.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -275,7 +275,7 @@ const libraryData = [
         "pages": "183",
         "publisher": "",
         "ibrahimRead": "24.01.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -410,7 +410,7 @@ const libraryData = [
         "pages": "176",
         "publisher": "",
         "ibrahimRead": "28.01.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -455,7 +455,7 @@ const libraryData = [
         "pages": "69",
         "publisher": "",
         "ibrahimRead": "1.01.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -464,7 +464,7 @@ const libraryData = [
         "pages": "171",
         "publisher": "",
         "ibrahimRead": "13.01.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "ERDEMDE"
     },
     {
@@ -481,8 +481,8 @@ const libraryData = [
         "author": "STEFAN ZWEIG",
         "pages": "83",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -598,7 +598,7 @@ const libraryData = [
         "author": "CENGİZ AYTMATOV",
         "pages": "135",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -634,8 +634,8 @@ const libraryData = [
         "author": "FRANZ KAFKA",
         "pages": "74",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -662,7 +662,7 @@ const libraryData = [
         "pages": "411",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -689,7 +689,7 @@ const libraryData = [
         "pages": "192",
         "publisher": "",
         "ibrahimRead": "8.10.2017",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -824,7 +824,7 @@ const libraryData = [
         "pages": "300",
         "publisher": "",
         "ibrahimRead": "1.02.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -833,7 +833,7 @@ const libraryData = [
         "pages": "276",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -842,7 +842,7 @@ const libraryData = [
         "pages": "198",
         "publisher": "",
         "ibrahimRead": "8.03.2022",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1022,7 +1022,7 @@ const libraryData = [
         "pages": "219",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "İBRAHİM tarihi kontrol et"
     },
     {
@@ -1067,7 +1067,7 @@ const libraryData = [
         "pages": "202",
         "publisher": "",
         "ibrahimRead": "26.01.2022",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1076,7 +1076,7 @@ const libraryData = [
         "pages": "384",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1085,7 +1085,7 @@ const libraryData = [
         "pages": "246",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "01.01.2018",
         "notes": ""
     },
     {
@@ -1103,7 +1103,7 @@ const libraryData = [
         "pages": "68",
         "publisher": "",
         "ibrahimRead": "1.09.2024",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1130,7 +1130,7 @@ const libraryData = [
         "pages": "143",
         "publisher": "",
         "ibrahimRead": "6.03.2021",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1399,8 +1399,8 @@ const libraryData = [
         "author": "JOHANN WOLFGANG VON GOETHE",
         "pages": "158",
         "publisher": "",
-        "ibrahimRead": "25.02.2026",
-        "esraRead": "",
+        "ibrahimRead": "",
+        "esraRead": "25.02.2026",
         "notes": ""
     },
     {
@@ -1472,7 +1472,7 @@ const libraryData = [
         "pages": "291",
         "publisher": "ithaki yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1481,7 +1481,7 @@ const libraryData = [
         "pages": "548",
         "publisher": "ithaki yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1517,7 +1517,7 @@ const libraryData = [
         "pages": "238",
         "publisher": "ithaki yayınları",
         "ibrahimRead": "23.11.2025",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1527,7 +1527,7 @@ const libraryData = [
         "publisher": "ithaki yayınları",
         "ibrahimRead": "",
         "esraRead": "1.12.2018",
-        "notes": "ERDEMDE"
+        "notes": ""
     },
     {
         "title": "BİZ",
@@ -1535,7 +1535,7 @@ const libraryData = [
         "pages": "246",
         "publisher": "ithaki yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -1545,7 +1545,7 @@ const libraryData = [
         "publisher": "ithaki yayınları",
         "ibrahimRead": "25.02.2022",
         "esraRead": "",
-        "notes": ""
+        "notes": "Okundu"
     },
     {
         "title": "MARS YILLIKLARI",
@@ -1804,7 +1804,7 @@ const libraryData = [
         "author": "JACK LONDON",
         "pages": "47",
         "publisher": "",
-        "ibrahimRead": "06/072024",
+        "ibrahimRead": "06.07.2024",
         "esraRead": "",
         "notes": ""
     },
@@ -2452,7 +2452,7 @@ const libraryData = [
         "author": "TOLSTOY",
         "pages": "56",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": "KARBON KİTAPLAR"
     },
@@ -2660,7 +2660,7 @@ const libraryData = [
         "pages": "416",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2777,7 +2777,7 @@ const libraryData = [
         "pages": "357",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2821,7 +2821,7 @@ const libraryData = [
         "author": "HÜSEYİN NİHAL ATSIZ",
         "pages": "240",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "1.01.2018",
         "notes": ""
     },
@@ -2831,7 +2831,7 @@ const libraryData = [
         "pages": "160",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2839,8 +2839,8 @@ const libraryData = [
         "author": "GRİGORY PETROV",
         "pages": "96",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2866,7 +2866,7 @@ const libraryData = [
         "author": "CENGİZ AYTMATOV",
         "pages": "143",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -2876,7 +2876,7 @@ const libraryData = [
         "pages": "251",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "NEVİN HOCAMIN KİTABI"
     },
     {
@@ -2884,7 +2884,7 @@ const libraryData = [
         "author": "JOHN STEİNBECK",
         "pages": "114",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "1.01.2010",
         "notes": ""
     },
@@ -2902,8 +2902,8 @@ const libraryData = [
         "author": "JOSE MAURO DE VASCONCELOS",
         "pages": "206",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2911,8 +2911,8 @@ const libraryData = [
         "author": "SELÇUK AYDEMİR",
         "pages": "222",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2920,8 +2920,8 @@ const libraryData = [
         "author": "SELÇUK AYDEMİR",
         "pages": "222",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
@@ -2930,7 +2930,7 @@ const libraryData = [
         "pages": "222",
         "publisher": "",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "ibrahim tarihi kontrol et"
     },
     {
@@ -2947,8 +2947,8 @@ const libraryData = [
         "author": "FRANZ KAFKA",
         "pages": "75",
         "publisher": "",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "Okundu",
+        "esraRead": "Okundu",
         "notes": "ibrahim tarihi kontrol et"
     },
     {
@@ -3021,7 +3021,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "",
         "esraRead": "",
-        "notes": ""
+        "notes": "esra yarım"
     },
     {
         "title": "HYPNOBİRTHİNG",
@@ -3623,7 +3623,7 @@ const libraryData = [
         "pages": "201",
         "publisher": "iş bankası yayınları hasan ali yücel dizisi",
         "ibrahimRead": "10.10.2025",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": ""
     },
     {
