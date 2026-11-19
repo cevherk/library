@@ -3190,7 +3190,7 @@ const libraryData = [
         "author": "MİHAİL BULGAKOV",
         "pages": "157",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "24.03.2024",
         "notes": "kitap kayıp sanırım"
     },
@@ -3361,7 +3361,7 @@ const libraryData = [
         "author": "PEYAMİ SAFA",
         "pages": "256",
         "publisher": "ötüken yayınları",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -4189,7 +4189,7 @@ const libraryData = [
         "author": "FALİH RIFKI ATAY",
         "pages": "176",
         "publisher": "pozitif yayınevi",
-        "ibrahimRead": "",
+        "ibrahimRead": "12.08.2026",
         "esraRead": "",
         "notes": ""
     },
