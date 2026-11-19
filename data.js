@@ -5,7 +5,7 @@ const libraryData = [
         "pages": "246",
         "publisher": "yapı kredi yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "Resimli özel baskı"
     },
     {
@@ -14,7 +14,7 @@ const libraryData = [
         "pages": "259",
         "publisher": "yapı kredi yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "Resimli özel baskı"
     },
     {
@@ -23,7 +23,7 @@ const libraryData = [
         "pages": "325",
         "publisher": "yapı kredi yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "Resimli özel baskı"
     },
     {
@@ -32,7 +32,7 @@ const libraryData = [
         "pages": "451",
         "publisher": "yapı kredi yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "Resimli özel baskı"
     },
     {
@@ -41,7 +41,7 @@ const libraryData = [
         "pages": "576",
         "publisher": "yapı kredi yayınları",
         "ibrahimRead": "",
-        "esraRead": "",
+        "esraRead": "Okundu",
         "notes": "Resimli özel baskı"
     },
     {
