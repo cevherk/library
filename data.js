@@ -240,7 +240,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "16.05.2016",
         "esraRead": "Okundu",
-        "notes": "ERDEMDE"
+        "notes": ""
     },
     {
         "title": "SESLER",
@@ -285,7 +285,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "2.01.2021",
         "esraRead": "",
-        "notes": "ERDEMDE"
+        "notes": ""
     },
     {
         "title": "AYLAK ADAM",
@@ -465,7 +465,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "13.01.2021",
         "esraRead": "Okundu",
-        "notes": "ERDEMDE"
+        "notes": ""
     },
     {
         "title": "AFORİZMALAR",
@@ -474,7 +474,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "31.12.2018",
         "esraRead": "",
-        "notes": "ERDEMDE"
+        "notes": ""
     },
     {
         "title": "SATRANÇ",
@@ -1302,7 +1302,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "17.01.2023",
         "esraRead": "",
-        "notes": "ERDEMDE(BU ERDEMİN OLABİLİR İÇİNDE OKUMA TARİHİ YAZIYOR MU KONTROL ET)"
+        "notes": ""
     },
     {
         "title": "APPLE",
@@ -1374,7 +1374,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "18.01.2026",
         "esraRead": "31.08.2023",
-        "notes": "ERDEMDEYDİ"
+        "notes": ""
     },
     {
         "title": "GECE YARISI KÜTÜPHANESİ",
