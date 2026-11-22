@@ -1,18 +1,23 @@
 /**
- * Our Digital Library
- * Vanilla JS, no dependencies. Data comes from `libraryData` (data.js).
+ * Our Digital Library — main UI
+ * Uses `window.Catalog` (catalog.js) and `window.Codes` (codes.js).
  */
 (() => {
     'use strict';
+
+    const {
+        books, byNo, CLASSES, CATEGORIES, collator,
+        compareCallNumbers, describeRead, formatDate,
+        escapeHtml, normalize, bookUrl,
+    } = window.Catalog;
 
     // ------------------------------------------------------------------
     // Config
     // ------------------------------------------------------------------
     const PAGE_SIZE = 48;
-    const LOCALE = 'tr';
     const READERS = {
-        ibrahim: { name: 'İbrahim', key: 'ibrahimRead', initial: 'İ' },
-        esra: { name: 'Esra', key: 'esraRead', initial: 'E' },
+        ibrahim: { name: 'İbrahim', initial: 'İ' },
+        esra: { name: 'Esra', initial: 'E' },
     };
     const FILTERS = [
         { id: 'all', label: 'All' },
@@ -21,81 +26,14 @@
         { id: 'both', label: 'Together' },
         { id: 'unread', label: 'Unread' },
     ];
-    // Curated cover palettes: [background, foreground, accent]
-    const PALETTES = [
-        ['#1f3a5f', '#f3e9d2', '#e0a458'],
-        ['#7a2e2e', '#f6ede1', '#e8b86d'],
-        ['#2f4f3e', '#efe6d4', '#c9a66b'],
-        ['#e8d9bd', '#2b2420', '#b4532a'],
-        ['#3b2f4a', '#f1e7da', '#d9a5b3'],
-        ['#b4532a', '#fbf3e6', '#2b2420'],
-        ['#0f2a2e', '#e6efe9', '#6fb3a9'],
-        ['#d9c3a5', '#3a2a20', '#7a2e2e'],
-        ['#2a2a2a', '#efe9df', '#d4a24c'],
-        ['#5c6b4e', '#f4efe2', '#2b2420'],
-        ['#8a5a44', '#f8efe4', '#f0c987'],
-        ['#cfdcd6', '#1f3a3a', '#b4532a'],
-    ];
-    const PATTERNS = ['band', 'circle', 'frame', 'diagonal', 'dots', 'split'];
-    const SMALL_WORDS = new Set(['ve', 'ile', 'ya', 'da', 'de', 'ki', 'mi', 'veya', 'of', 'the', 'and', 'a', 'an', 'in', 'on', 'to']);
-    const ROMAN = /^(i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii)$/i;
-
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ------------------------------------------------------------------
-    // Utilities
+    // Helpers
     // ------------------------------------------------------------------
     const $ = (sel, root = document) => root.querySelector(sel);
     const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
-
-    const escapeHtml = (value) =>
-        String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
-    /** Turkish-aware, accent-insensitive normalisation for search & grouping. */
-    const normalize = (value) =>
-        String(value ?? '')
-            .toLocaleLowerCase(LOCALE)
-            .replace(/ı/g, 'i')
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/\s+/g, ' ')
-            .trim();
-
-    /** "HARRY POTTER VE SIRLAR ODASI" -> "Harry Potter ve Sırlar Odası" (Turkish-aware). */
-    const titleCase = (value) => {
-        const lower = String(value ?? '').trim().toLocaleLowerCase(LOCALE);
-        let wordIndex = 0;
-        return lower.replace(/\p{L}+/gu, (word, offset, full) => {
-            const prev = full[offset - 1];
-            const isFirst = wordIndex++ === 0;
-            if (prev === "'" || prev === '’') return word; // Dünya'nın
-            if (ROMAN.test(word) && word.length > 1) return word.toLocaleUpperCase(LOCALE);
-            if (!isFirst && SMALL_WORDS.has(word) && prev === ' ') return word;
-            return word.charAt(0).toLocaleUpperCase(LOCALE) + word.slice(1);
-        });
-    };
-
-    /** Lenient date parser: "4.04.2022", "06/072024" -> Date | null */
-    const parseDate = (value) => {
-        const m = String(value ?? '').match(/(\d{1,2})\D*(\d{1,2})\D*(\d{4})/);
-        if (!m) return null;
-        const [, d, mo, y] = m.map(Number);
-        const date = new Date(y, mo - 1, d);
-        return Number.isNaN(date.getTime()) ? null : date;
-    };
-
-    const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const numberFmt = new Intl.NumberFormat('en-US');
-    const formatDate = (date) => (date ? dateFmt.format(date) : '');
-
-    const hash = (str) => {
-        let h = 2166136261;
-        for (let i = 0; i < str.length; i++) {
-            h ^= str.charCodeAt(i);
-            h = Math.imul(h, 16777619);
-        }
-        return h >>> 0;
-    };
 
     const debounce = (fn, wait = 120) => {
         let t;
@@ -104,44 +42,6 @@
             t = setTimeout(() => fn(...args), wait);
         };
     };
-
-    // ------------------------------------------------------------------
-    // Data model — normalise once, query many times
-    // ------------------------------------------------------------------
-    const rawData = Array.isArray(window.libraryData) ? window.libraryData : (typeof libraryData !== 'undefined' ? libraryData : []);
-
-    const books = rawData.map((raw, index) => {
-        const pages = Number.parseInt(raw.pages, 10);
-        const ibrahimDate = parseDate(raw.ibrahimRead);
-        const esraDate = parseDate(raw.esraRead);
-        const h = hash(raw.title + raw.author);
-        return {
-            id: index,
-            title: titleCase(raw.title),
-            author: titleCase(raw.author) || 'Unknown author',
-            publisher: titleCase(raw.publisher),
-            notes: String(raw.notes ?? '').trim(),
-            pages: Number.isFinite(pages) && pages > 0 ? pages : null,
-            reads: {
-                ibrahim: raw.ibrahimRead?.trim() ? { date: ibrahimDate, raw: raw.ibrahimRead.trim() } : null,
-                esra: raw.esraRead?.trim() ? { date: esraDate, raw: raw.esraRead.trim() } : null,
-            },
-            lastRead: Math.max(ibrahimDate?.getTime() ?? 0, esraDate?.getTime() ?? 0),
-            authorKey: normalize(raw.author),
-            searchText: normalize(`${raw.title} ${raw.author} ${raw.publisher} ${raw.notes}`),
-            palette: PALETTES[h % PALETTES.length],
-            pattern: PATTERNS[(h >>> 8) % PATTERNS.length],
-        };
-    });
-
-    // Unify author spellings ("Stefan Zweig" / "Stefan Zweıg") — prefer the dotted-i variant
-    const dotCount = (s) => (s.match(/i/g) || []).length;
-    const canonicalAuthor = new Map();
-    books.forEach((b) => {
-        const best = canonicalAuthor.get(b.authorKey);
-        if (!best || dotCount(b.author) > dotCount(best)) canonicalAuthor.set(b.authorKey, b.author);
-    });
-    books.forEach((b) => { b.author = canonicalAuthor.get(b.authorKey) || b.author; });
 
     const byId = new Map(books.map((b) => [b.id, b]));
 
@@ -156,10 +56,16 @@
         }
     };
 
-    const collator = new Intl.Collator(LOCALE, { sensitivity: 'base', numeric: true });
+    const matchesCategory = (book, cat) => {
+        if (cat === 'all') return true;
+        if (cat.startsWith('class:')) return book.category.classKey === cat.slice(6);
+        return book.category.code === cat;
+    };
+
     const SORTERS = {
-        shelf: (a, b) => a.id - b.id,
-        recent: (a, b) => b.lastRead - a.lastRead || a.id - b.id,
+        shelf: (a, b) => a.no - b.no,
+        call: compareCallNumbers,
+        recent: (a, b) => b.lastRead - a.lastRead || a.no - b.no,
         title: (a, b) => collator.compare(a.title, b.title),
         author: (a, b) => collator.compare(a.author, b.author) || collator.compare(a.title, b.title),
         'pages-desc': (a, b) => (b.pages ?? -1) - (a.pages ?? -1),
@@ -173,6 +79,7 @@
     const state = {
         query: params.get('q') ?? '',
         filter: FILTERS.some((f) => f.id === params.get('reader')) ? params.get('reader') : 'all',
+        category: params.get('cat') ?? 'all',
         sort: params.get('sort') in SORTERS ? params.get('sort') : 'shelf',
         view: params.get('view') === 'list' ? 'list' : (localStorage.getItem('library-view') || 'grid'),
         results: [],
@@ -183,6 +90,7 @@
         const p = new URLSearchParams();
         if (state.query) p.set('q', state.query);
         if (state.filter !== 'all') p.set('reader', state.filter);
+        if (state.category !== 'all') p.set('cat', state.category);
         if (state.sort !== 'shelf') p.set('sort', state.sort);
         if (state.view !== 'grid') p.set('view', state.view);
         const qs = p.toString();
@@ -208,10 +116,16 @@
         Object.entries(READERS)
             .map(([id, r]) => {
                 const read = book.reads[id];
-                const label = read ? `${r.name} read this${read.date ? ` on ${formatDate(read.date)}` : ''}` : `${r.name} hasn't read this yet`;
+                const label = read ? `${r.name}: ${describeRead(read)}` : `${r.name} hasn't read this yet`;
                 return `<span class="badge badge-${id} ${read ? 'is-read' : ''}" title="${escapeHtml(label)}"><span class="sr-only">${escapeHtml(label)}</span><span aria-hidden="true">${r.initial}</span></span>`;
             })
             .join('');
+
+    const statusBadge = (book) => {
+        if (book.status === 'missing') return '<span class="pill-flag pill-missing">Missing</span>';
+        if (book.onLoan) return `<span class="pill-flag pill-loan">On loan</span>`;
+        return '';
+    };
 
     const bookCardHtml = (book, i) => `
         <article class="book" style="--i:${i % PAGE_SIZE}">
@@ -221,43 +135,89 @@
                     <h3 class="book-title">${escapeHtml(book.title)}</h3>
                     <p class="book-author">${escapeHtml(book.author)}</p>
                     <div class="book-foot">
-                        <span class="badges">${readerBadges(book)}</span>
-                        ${book.pages ? `<span class="book-pages">${book.pages} pp</span>` : ''}
+                        <span class="badges">${readerBadges(book)}${statusBadge(book)}</span>
+                        <span class="book-meta-right">
+                            <span class="book-call" title="Call number">${escapeHtml(book.callNumber)}</span>
+                            ${book.pages ? `<span class="book-pages">${book.pages} pp</span>` : ''}
+                        </span>
                     </div>
                 </div>
             </button>
         </article>`;
 
-    const readRowHtml = (id) => {
+    const readRowHtml = (id, book) => {
         const r = READERS[id];
-        return (book) => {
-            const read = book.reads[id];
-            return `
-                <div class="read-row ${read ? 'is-read' : ''}">
-                    <span class="badge badge-${id} ${read ? 'is-read' : ''}" aria-hidden="true">${r.initial}</span>
-                    <div>
-                        <strong>${r.name}</strong>
-                        <span>${read ? (read.date ? `Finished ${formatDate(read.date)}` : `Finished · ${escapeHtml(read.raw)}`) : 'Not read yet'}</span>
-                    </div>
-                </div>`;
-        };
+        const read = book.reads[id];
+        return `
+            <div class="read-row ${read ? 'is-read' : ''}">
+                <span class="badge badge-${id} ${read ? 'is-read' : ''}" aria-hidden="true">${r.initial}</span>
+                <div>
+                    <strong>${r.name}</strong>
+                    <span>${escapeHtml(describeRead(read))}</span>
+                </div>
+            </div>`;
     };
 
     const modalHtml = (book) => {
         const more = books.filter((b) => b.authorKey === book.authorKey && b.id !== book.id).slice(0, 6);
+        const seriesBooks = book.series
+            ? books.filter((b) => b.series === book.series && b.id !== book.id).slice(0, 8)
+            : [];
+        const metaItems = [
+            ['Accession', `#${book.accession}`],
+            ['Call number', book.callNumber],
+            ['Subject', `<span class="cat-dot" style="--c:${book.category.color}"></span>${escapeHtml(book.category.name)} (${escapeHtml(book.category.code)})`],
+            book.series ? ['Series', `${escapeHtml(book.series)}${book.volume ? ` · Book ${escapeHtml(book.volume)}` : ''}`] : null,
+            book.translator ? ['Translator', escapeHtml(book.translator)] : null,
+            book.publisher ? ['Publisher', escapeHtml(book.publisher)] : null,
+            book.year ? ['Edition', escapeHtml(book.year)] : null,
+            book.pages ? ['Length', `${book.pages} pages`] : null,
+            book.language && book.language !== 'Türkçe' ? ['Language', escapeHtml(book.language)] : null,
+            book.isbn ? ['ISBN', escapeHtml(book.isbn)] : null,
+            book.shelf ? ['Shelf', escapeHtml(book.shelf)] : null,
+            book.status === 'missing' ? ['Status', '<span class="pill-flag pill-missing">Missing</span>'] : null,
+            book.onLoan ? ['Loaned to', `${escapeHtml(book.loanedTo)}${book.loanDate ? ` (${formatDate(book.loanDate)})` : ''}`] : null,
+        ].filter(Boolean);
+
+        const qr = window.Codes ? window.Codes.qrSvg(bookUrl(book), { margin: 2, className: 'modal-qr-svg' }) : '';
+
         return `
-            <div class="modal-cover">${coverHtml(book, 'cover--lg')}</div>
+            <div class="modal-cover">
+                ${coverHtml(book, 'cover--lg')}
+                <div class="modal-tag">
+                    <span class="modal-tag-call" style="--c:${book.category.color}">${escapeHtml(book.callNumber)}</span>
+                    <span class="modal-tag-acc">#${book.accession}</span>
+                </div>
+            </div>
             <div class="modal-content">
                 <p class="eyebrow">${book.pages ? `${book.pages} pages` : 'Book'}${book.publisher ? ` · ${escapeHtml(book.publisher)}` : ''}</p>
                 <h2 id="modalTitle" class="modal-title">${escapeHtml(book.title)}</h2>
                 <button type="button" class="modal-author" data-author="${escapeHtml(book.author)}">by ${escapeHtml(book.author)}</button>
 
                 <div class="read-rows">
-                    ${readRowHtml('ibrahim')(book)}
-                    ${readRowHtml('esra')(book)}
+                    ${readRowHtml('ibrahim', book)}
+                    ${readRowHtml('esra', book)}
                 </div>
 
                 ${book.notes ? `<blockquote class="note">${escapeHtml(book.notes)}</blockquote>` : ''}
+
+                <dl class="catalog-dl">
+                    ${metaItems.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
+                </dl>
+
+                <div class="modal-actions">
+                    ${qr ? `<div class="modal-qr" title="Scan to open this book">${qr}<span>Scan for book #${book.accession}</span></div>` : ''}
+                    <a class="btn btn-accent" href="labels.html?select=${book.no}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                        <span>Print label</span>
+                    </a>
+                </div>
+
+                ${seriesBooks.length ? `
+                    <div class="more">
+                        <h3>In ${escapeHtml(book.series)}</h3>
+                        <ul>${seriesBooks.map((b) => `<li><button type="button" data-id="${b.id}">${b.volume ? `#${escapeHtml(b.volume)} · ` : ''}${escapeHtml(b.title)}</button></li>`).join('')}</ul>
+                    </div>` : ''}
 
                 ${more.length ? `
                     <div class="more">
@@ -315,9 +275,8 @@
         const counts = new Map();
         books.forEach((b) => {
             for (const id of Object.keys(READERS)) {
-                const d = b.reads[id]?.date;
-                if (!d) continue;
-                const y = d.getFullYear();
+                const y = b.reads[id]?.year;
+                if (!y) continue;
                 if (!counts.has(y)) counts.set(y, { ibrahim: 0, esra: 0 });
                 counts.get(y)[id]++;
             }
@@ -325,7 +284,6 @@
         const el = $('#yearChart');
         if (!counts.size) { el.innerHTML = '<p class="muted">No reading dates yet.</p>'; return; }
 
-        // Show a continuous range of the most recent 12 years with data
         const years = [...counts.keys()].sort((a, b) => a - b);
         const last = years[years.length - 1];
         const first = Math.max(years[0], last - 11);
@@ -398,11 +356,40 @@
     const noResults = $('#noResults');
     const searchInput = $('#searchInput');
     const sortSelect = $('#sortSelect');
+    const categoryFilter = $('#categoryFilter');
     const chipsEl = $('#readerFilter');
 
+    function populateCategoryFilter() {
+        const classCounts = new Map();
+        const catCounts = new Map();
+        books.forEach((b) => {
+            classCounts.set(b.category.classKey, (classCounts.get(b.category.classKey) ?? 0) + 1);
+            catCounts.set(b.category.code, (catCounts.get(b.category.code) ?? 0) + 1);
+        });
+
+        const groups = Object.entries(CLASSES)
+            .filter(([key]) => classCounts.has(key))
+            .map(([key, cls]) => {
+                const subs = Object.entries(CATEGORIES)
+                    .filter(([code]) => code.startsWith(key) && catCounts.has(code))
+                    .map(([code, name]) => `<option value="${code}">${escapeHtml(name)} (${catCounts.get(code)})</option>`)
+                    .join('');
+                if (subs.split('<option').length <= 2) return subs;
+                return `<optgroup label="${escapeHtml(cls.name)} (${classCounts.get(key)})"><option value="class:${key}">All ${escapeHtml(cls.name)} (${classCounts.get(key)})</option>${subs}</optgroup>`;
+            })
+            .join('');
+
+        categoryFilter.insertAdjacentHTML('beforeend', groups);
+        if ([...categoryFilter.options].some((o) => o.value === state.category)) {
+            categoryFilter.value = state.category;
+        } else {
+            state.category = 'all';
+        }
+    }
+
     function renderChips() {
-        const q = normalize(state.query);
-        const base = q ? books.filter((b) => b.searchText.includes(q)) : books;
+        const terms = normalize(state.query).split(' ').filter(Boolean);
+        const base = books.filter((b) => matchesCategory(b, state.category) && terms.every((t) => b.searchText.includes(t)));
         chipsEl.innerHTML = FILTERS.map((f) => {
             const count = base.filter((b) => matchesFilter(b, f.id)).length;
             const active = state.filter === f.id;
@@ -421,7 +408,7 @@
     function applyFilters() {
         const terms = normalize(state.query).split(' ').filter(Boolean);
         state.results = books
-            .filter((b) => matchesFilter(b, state.filter) && terms.every((t) => b.searchText.includes(t)))
+            .filter((b) => matchesFilter(b, state.filter) && matchesCategory(b, state.category) && terms.every((t) => b.searchText.includes(t)))
             .sort(SORTERS[state.sort]);
         state.rendered = 0;
         shelf.innerHTML = '';
@@ -449,6 +436,8 @@
         state.query = text;
         searchInput.value = text;
         state.filter = 'all';
+        state.category = 'all';
+        categoryFilter.value = 'all';
         closeModal();
         applyFilters();
         $('#shelf').scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
@@ -483,7 +472,7 @@
         lastFocus?.focus?.({ preventScroll: true });
     });
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal(); // backdrop click
+        if (e.target === modal) closeModal();
         const idBtn = e.target.closest('[data-id]');
         if (idBtn) openBook(idBtn.dataset.id);
         const authorBtn = e.target.closest('[data-author]');
@@ -522,7 +511,6 @@
         applyFilters();
     });
 
-    // Arrow-key navigation inside the radiogroup
     chipsEl.addEventListener('keydown', (e) => {
         if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
         const idx = FILTERS.findIndex((f) => f.id === state.filter);
@@ -530,6 +518,11 @@
         state.filter = next.id;
         applyFilters();
         chipsEl.querySelector(`[data-filter="${next.id}"]`)?.focus();
+    });
+
+    categoryFilter.addEventListener('change', () => {
+        state.category = categoryFilter.value;
+        applyFilters();
     });
 
     sortSelect.addEventListener('change', () => {
@@ -549,7 +542,9 @@
     $('#clearFilters').addEventListener('click', () => {
         state.query = '';
         state.filter = 'all';
+        state.category = 'all';
         searchInput.value = '';
+        categoryFilter.value = 'all';
         applyFilters();
         searchInput.focus();
     });
@@ -599,6 +594,7 @@
     // ------------------------------------------------------------------
     // Boot
     // ------------------------------------------------------------------
+    populateCategoryFilter();
     renderStats();
     renderYearChart();
     renderTopAuthors();
@@ -607,4 +603,10 @@
     applyFilters();
     $$('.reveal').forEach((el) => revealObserver.observe(el));
     document.documentElement.classList.add('is-ready');
+
+    // Deep link from a QR code (?book=120)
+    const bookParam = Number.parseInt(params.get('book'), 10);
+    if (bookParam && byNo.has(bookParam)) {
+        openBook(byNo.get(bookParam).id);
+    }
 })();

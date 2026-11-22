@@ -11,7 +11,9 @@ A personal library of 470+ books, built for İbrahim and Esra to keep track of w
 - **Fast search** — handles Turkish characters and ignores accents (`zweig` finds *ZWEİG*, `ciftlik` finds *ÇİFTLİK*), and lets you search several words at once.
 - **Filters & sorting** — filter by reader (İbrahim, Esra, Together, Unread) with live counts; sort by title, author, length or most recently read.
 - **Grid & list views**, plus a **"Surprise me"** button that picks a random unread book.
-- **Book details** — a dialog showing who read the book and when, any notes, and other books by the same author.
+- **Book details & QR links** — a dialog showing accession number, Dewey call number, series, notes, a scannable QR code (`?book=<no>`), and a quick **Print label** button.
+- **Label Studio (`labels.html`)** — print-ready A4 label generator with 4 templates (Bookplate + Spine, Ex-Libris & QR, Spine Only, Library Card), Code 128 barcodes, Dewey colour bands, and partial-sheet slot offset.
+- **Subject filter & call-number sort** — browse by Dewey class and sort in real library shelf order.
 - **Shareable links** — search, filter, sort and view are saved in the URL.
 - **Dark mode** — follows your system setting by default, and remembers your choice.
 - **Accessible & responsive** — works with the keyboard (`/` or `⌘K` jumps to search, `Esc` clears it), has ARIA labels, and respects `prefers-reduced-motion`.

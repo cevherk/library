@@ -977,7 +977,8 @@ svg.icon-fill { fill: currentColor; stroke: none; }
 
 @media (max-width: 680px) {
     .container { width: min(100% - 1.5rem, 1240px); }
-    .nav-link { display: none; }
+    .nav-link:not(.nav-link-pill) { display: none; }
+    .select select { max-width: 150px; text-overflow: ellipsis; }
     .stat { padding: 1.1rem; }
     .stat-value { font-size: 2.1rem; }
     .panel { padding: 1.15rem; border-radius: var(--radius); }
@@ -998,4 +999,117 @@ svg.icon-fill { fill: currentColor; stroke: none; }
 @media (max-width: 420px) {
     .stats { grid-template-columns: 1fr 1fr; gap: .6rem; }
     .stat-label { font-size: .78rem; }
+}
+
+/* ---------- Catalogue metadata & QR in modal ---------- */
+.nav-link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--bg-sunk);
+    color: var(--ink);
+    font-weight: 500;
+}
+.nav-link-pill:hover { background: var(--accent); color: var(--accent-ink); }
+.nav-link-pill svg { width: 15px; height: 15px; }
+
+.book-meta-right {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    min-width: 0;
+}
+.book-call {
+    display: none;
+    font-size: .72rem;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    color: var(--ink-faint);
+    white-space: nowrap;
+}
+.books[data-view='list'] .book-call { display: inline; }
+
+.pill-flag {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    padding: 0 .5rem;
+    border-radius: 99px;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+}
+.pill-missing { background: color-mix(in srgb, #c23b2b 16%, transparent); color: #c23b2b; }
+.pill-loan { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+[data-theme='dark'] .pill-missing { color: #ff8a7a; }
+
+.modal-tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-top: .9rem;
+    padding: .5rem .7rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--c, var(--accent));
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: .78rem;
+}
+.modal-tag-call { font-weight: 600; color: var(--ink); }
+.modal-tag-acc { color: var(--ink-faint); }
+
+.catalog-dl {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap: .65rem 1.25rem;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius);
+    background: var(--bg);
+    border: 1px solid var(--line);
+}
+.catalog-dl dt {
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--ink-faint);
+}
+.catalog-dl dd {
+    font-size: .88rem;
+    color: var(--ink);
+    margin-top: .1rem;
+    word-break: break-word;
+}
+.cat-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--c, var(--accent));
+    margin-right: .4rem;
+    vertical-align: middle;
+}
+
+.modal-actions {
+    margin-top: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.modal-qr {
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    font-size: .78rem;
+    color: var(--ink-faint);
+}
+.modal-qr-svg {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    flex: none;
 }

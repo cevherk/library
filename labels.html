@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Studio · Our Digital Library</title>
+    <meta name="description" content="Print-ready library spine labels, ex-libris bookplates with QR codes & barcodes, and library cards.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b4532a'/%3E%3Cpath d='M18 16h10v32H18zM31 16h7v32h-7zM41 18l6-2 7 30-6 2z' fill='%23f6f1e9'/%3E%3C/svg%3E">
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('library-theme');
+                var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="labels.css">
+</head>
+<body class="labels-body">
+    <!-- ============ Top bar (screen only) ============ -->
+    <nav class="topbar no-print" aria-label="Primary">
+        <div class="container topbar-inner">
+            <a class="brand" href="./">
+                <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+                    <rect width="64" height="64" rx="14" />
+                    <path d="M18 16h10v32H18zM31 16h7v32h-7zM41 18l6-2 7 30-6 2z" />
+                </svg>
+                <span>Our Library</span>
+            </a>
+            <div class="topbar-actions">
+                <a class="nav-link" href="./">← Back to Shelf</a>
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode">
+                    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <button class="btn btn-accent" id="printBtn" type="button">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    <span>Print A4 Sheet</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="studio">
+        <!-- ============ Sidebar: Controls & Book Picker (screen only) ============ -->
+        <aside class="studio-side no-print" aria-label="Label settings and book selection">
+            <div class="side-head">
+                <p class="eyebrow">Librarian's Press</p>
+                <h1>Label Studio</h1>
+                <p class="side-sub">Next free accession number: <strong id="nextNoBadge">#0471</strong></p>
+            </div>
+
+            <!-- Template & Sheet Options -->
+            <section class="ctrl-group">
+                <h2 class="ctrl-title">1. Label format</h2>
+                <div class="tpl-grid" id="templatePicker" role="radiogroup" aria-label="Label template">
+                    <button type="button" class="tpl-btn is-active" data-tpl="combo" role="radio" aria-checked="true">
+                        <strong>Bookplate + Spine</strong>
+                        <span>99 × 38 mm · 14 / A4</span>
+                    </button>
+                    <button type="button" class="tpl-btn" data-tpl="bookplate" role="radio" aria-checked="false">
+                        <strong>Ex-Libris &amp; QR</strong>
+                        <span>66 × 34.5 mm · 24 / A4</span>
+                    </button>
+                    <button type="button" class="tpl-btn" data-tpl="spine" role="radio" aria-checked="false">
+                        <strong>Spine Only</strong>
+                        <span>26 × 38 mm · 49 / A4</span>
+                    </button>
+                    <button type="button" class="tpl-btn" data-tpl="card" role="radio" aria-checked="false">
+                        <strong>Library Card</strong>
+                        <span>85 × 130 mm · 4 / A4</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="ctrl-group">
+                <h2 class="ctrl-title">2. Print &amp; style options</h2>
+                <div class="opt-grid">
+                    <label class="field">
+                        <span>Library name</span>
+                        <input type="text" id="ownerInput" value="İbrahim & Esra Kitaplığı" maxlength="36">
+                    </label>
+                    <label class="field">
+                        <span>Skip first slots (partial sheet)</span>
+                        <input type="number" id="offsetInput" value="0" min="0" max="48">
+                    </label>
+                </div>
+                <div class="toggles">
+                    <label class="toggle"><input type="checkbox" id="optQr" checked><span>QR Code (links to book)</span></label>
+                    <label class="toggle"><input type="checkbox" id="optBarcode" checked><span>Code 128 Barcode</span></label>
+                    <label class="toggle"><input type="checkbox" id="optColor" checked><span>Dewey colour band</span></label>
+                    <label class="toggle"><input type="checkbox" id="optCut" checked><span>Dashed cut guides</span></label>
+                </div>
+            </section>
+
+            <!-- Book Selection -->
+            <section class="ctrl-group ctrl-books">
+                <div class="ctrl-row">
+                    <h2 class="ctrl-title">3. Select books (<span id="selectedCount">0</span>)</h2>
+                    <div class="quick-btns">
+                        <button type="button" class="mini-btn" id="selLatest">Last 14</button>
+                        <button type="button" class="mini-btn" id="selAll">All</button>
+                        <button type="button" class="mini-btn" id="selNone">Clear</button>
+                    </div>
+                </div>
+
+                <div class="picker-filters">
+                    <input type="search" id="pickerSearch" placeholder="Search title, author, #no, call #…" autocomplete="off">
+                    <div class="range-row">
+                        <input type="number" id="rangeFrom" placeholder="From #" min="1">
+                        <span>–</span>
+                        <input type="number" id="rangeTo" placeholder="To #" min="1">
+                        <button type="button" class="mini-btn" id="selRange">Select #</button>
+                    </div>
+                </div>
+
+                <div class="picker-list" id="pickerList" role="listbox" aria-label="Books"></div>
+            </section>
+        </aside>
+
+        <!-- ============ Live A4 Print Preview ============ -->
+        <main class="studio-stage">
+            <div class="stage-bar no-print">
+                <span id="sheetSummary">0 labels · 0 A4 pages</span>
+                <span class="stage-tip">Tip: In print dialog, set Margins to <strong>None</strong> and enable <strong>Background graphics</strong>.</span>
+            </div>
+            <div class="sheets" id="sheetsContainer">
+                <!-- A4 .sheet pages injected here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="catalog.js"></script>
+    <script src="codes.js"></script>
+    <script src="labels.js" defer></script>
+</body>
+</html>

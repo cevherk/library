@@ -1,0 +1,557 @@
+/* ==========================================================================
+   Label Studio — print-ready A4 sheets & library label templates
+   ========================================================================== */
+
+.labels-body {
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+.studio {
+    display: grid;
+    grid-template-columns: 370px 1fr;
+    min-height: calc(100vh - var(--topbar-h));
+}
+
+/* ---------- Sidebar ---------- */
+.studio-side {
+    background: var(--bg-elev);
+    border-right: 1px solid var(--line);
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+    position: sticky;
+    top: var(--topbar-h);
+    height: calc(100vh - var(--topbar-h));
+    overflow-y: auto;
+}
+
+.side-head .eyebrow { margin-bottom: .3rem; }
+.side-head h1 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+}
+.side-sub {
+    margin-top: .35rem;
+    font-size: .84rem;
+    color: var(--ink-soft);
+}
+.side-sub strong {
+    font-family: var(--font-mono);
+    color: var(--accent);
+}
+
+.ctrl-group {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+}
+.ctrl-title {
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--ink-soft);
+}
+.ctrl-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.tpl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+}
+.tpl-btn {
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+    padding: .65rem .75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    text-align: left;
+    transition: border-color .15s, background-color .15s, box-shadow .15s;
+}
+.tpl-btn strong { font-size: .84rem; font-weight: 600; }
+.tpl-btn span { font-size: .72rem; color: var(--ink-faint); }
+.tpl-btn:hover { border-color: var(--accent); }
+.tpl-btn.is-active {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev));
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.opt-grid {
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    gap: .5rem;
+}
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+.field span { font-size: .74rem; color: var(--ink-soft); }
+.field input,
+.picker-filters input {
+    height: 36px;
+    padding: 0 .65rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    font-size: .85rem;
+    outline: none;
+    min-width: 0;
+}
+.field input:focus,
+.picker-filters input:focus { border-color: var(--accent); }
+
+.toggles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .4rem .75rem;
+    margin-top: .25rem;
+}
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    font-size: .8rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+}
+.toggle input { accent-color: var(--accent); width: 15px; height: 15px; }
+
+.quick-btns { display: flex; gap: .3rem; }
+.mini-btn {
+    padding: .25rem .55rem;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    font-size: .74rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+.mini-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.ctrl-books { flex: 1; min-height: 260px; }
+.picker-filters { display: flex; flex-direction: column; gap: .45rem; }
+.range-row {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+}
+.range-row input { flex: 1; height: 32px; font-size: .8rem; }
+.range-row span { color: var(--ink-faint); font-size: .85rem; }
+
+.picker-list {
+    flex: 1;
+    min-height: 200px;
+    max-height: 340px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+}
+.pick-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .6rem;
+    padding: .5rem .65rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    transition: background-color .12s;
+}
+.pick-item:last-child { border-bottom: 0; }
+.pick-item:hover { background: var(--bg-sunk); }
+.pick-item.is-selected { background: color-mix(in srgb, var(--accent) 11%, var(--bg)); }
+.pick-check {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--line-strong);
+    display: grid;
+    place-items: center;
+    font-size: .7rem;
+    color: var(--accent-ink);
+}
+.pick-item.is-selected .pick-check {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+.pick-main { min-width: 0; }
+.pick-title {
+    display: block;
+    font-size: .82rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pick-sub {
+    display: block;
+    font-size: .72rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pick-no {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--ink-faint);
+}
+
+/* ---------- Stage & A4 Sheet ---------- */
+.studio-stage {
+    padding: 1.5rem;
+    background: var(--bg-sunk);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    overflow-x: auto;
+}
+.stage-bar {
+    width: min(210mm, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: .84rem;
+    color: var(--ink-soft);
+}
+.stage-tip { font-size: .78rem; color: var(--ink-faint); }
+
+.sheets {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+/* Exact A4 canvas — always crisp black-on-white like physical paper */
+.sheet {
+    width: 210mm;
+    height: 297mm;
+    background: #ffffff;
+    color: #181411;
+    box-shadow: var(--shadow-lg);
+    padding: 10mm 6mm;
+    display: grid;
+    align-content: start;
+    justify-content: center;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.sheet--combo {
+    grid-template-columns: repeat(2, 99mm);
+    grid-auto-rows: 38mm;
+    gap: 0;
+    padding: 15mm 6mm;
+}
+.sheet--bookplate {
+    grid-template-columns: repeat(3, 66mm);
+    grid-auto-rows: 34.5mm;
+    gap: 0;
+    padding: 10.5mm 6mm;
+}
+.sheet--spine {
+    grid-template-columns: repeat(7, 26mm);
+    grid-auto-rows: 38mm;
+    gap: 1.5mm;
+    padding: 12mm 6mm;
+}
+.sheet--card {
+    grid-template-columns: repeat(2, 85mm);
+    grid-auto-rows: 130mm;
+    gap: 8mm;
+    padding: 14mm 12mm;
+}
+
+/* Cut guides */
+.lbl {
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #fff;
+    color: #181411;
+    font-family: 'Inter', sans-serif;
+}
+.show-cut .lbl:not(.lbl-blank) {
+    outline: 0.25mm dashed #c8c0b6;
+    outline-offset: -0.125mm;
+}
+.hide-color .lbl { --c: #181411 !important; }
+.hide-qr .lbl-qr { display: none !important; }
+.hide-barcode .lbl-bc { display: none !important; }
+
+/* ---------- Template 1: Bookplate + Spine Combo (99x38mm) ---------- */
+.lbl-combo {
+    display: grid;
+    grid-template-columns: 73mm 26mm;
+    height: 38mm;
+}
+.lbl-combo-main {
+    position: relative;
+    padding: 2.8mm 3mm 2.5mm 4.5mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 0.25mm dashed #bbb2a6;
+}
+.lbl-combo-main::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2mm;
+    background: var(--c, #b4532a);
+}
+.lbl-owner {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 7.2pt;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--c, #b4532a);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.lbl-acc {
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    font-weight: 700;
+    color: #3a332d;
+}
+.lbl-book-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 9pt;
+    font-weight: 600;
+    line-height: 1.15;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.lbl-book-author {
+    font-size: 7.2pt;
+    color: #5a5047;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.lbl-combo-foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2mm;
+}
+.lbl-bc-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5mm;
+}
+.lbl-bc { width: 100%; height: 6.5mm; }
+.lbl-call-inline {
+    font-family: var(--font-mono);
+    font-size: 6.8pt;
+    font-weight: 600;
+    color: #2b2420;
+}
+.lbl-qr { width: 13mm; height: 13mm; flex: none; }
+
+/* Spine part (shared between Combo right-side & Spine-only) */
+.lbl-spine {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.5mm 1.5mm 2mm;
+    text-align: center;
+    height: 100%;
+}
+.lbl-spine-band {
+    width: 100%;
+    height: 4.5mm;
+    background: var(--c, #b4532a);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    border-radius: 1mm;
+}
+.lbl-spine-call {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4mm;
+    font-family: var(--font-mono);
+    line-height: 1.05;
+}
+.lbl-spine-cls { font-size: 8.5pt; font-weight: 700; }
+.lbl-spine-cut { font-size: 10pt; font-weight: 700; letter-spacing: .04em; }
+.lbl-spine-let { font-size: 8.5pt; font-weight: 600; color: #3a332d; }
+.lbl-spine-sub { font-size: 6.8pt; font-weight: 600; color: #5a5047; }
+.lbl-spine-foot {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    font-weight: 600;
+    color: #4a423b;
+    border-top: 0.2mm solid #d8d0c5;
+    width: 100%;
+    padding-top: 1mm;
+}
+
+/* ---------- Template 2: Bookplate (66x34.5mm) ---------- */
+.lbl-bookplate {
+    position: relative;
+    padding: 2.4mm 2.8mm 2.2mm 4mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 34.5mm;
+}
+.lbl-bookplate::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1.8mm;
+    background: var(--c, #b4532a);
+}
+.lbl-bookplate .lbl-book-title { font-size: 8.2pt; }
+.lbl-bookplate .lbl-qr { width: 11.5mm; height: 11.5mm; }
+.lbl-bookplate .lbl-bc { height: 5.5mm; }
+
+/* ---------- Template 4: Library Card (85x130mm) ---------- */
+.lbl-card {
+    border: 0.35mm solid #2b2420;
+    border-radius: 2mm;
+    padding: 4.5mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 130mm;
+}
+.lbl-card-head {
+    border-bottom: 0.5mm solid var(--c, #b4532a);
+    padding-bottom: 2.5mm;
+}
+.lbl-card-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    font-weight: 700;
+    color: var(--c, #b4532a);
+    margin-bottom: 1.5mm;
+}
+.lbl-card-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 11.5pt;
+    font-weight: 600;
+    line-height: 1.15;
+}
+.lbl-card-author { font-size: 8.5pt; color: #4a423b; margin-top: .8mm; }
+.lbl-card-meta { font-size: 7pt; color: #7a7067; margin-top: .8mm; }
+
+.lbl-card-table {
+    flex: 1;
+    margin: 3mm 0;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 6.8pt;
+}
+.lbl-card-table th {
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #5a5047;
+    border-bottom: 0.35mm solid #2b2420;
+    padding: 1mm 1.5mm;
+}
+.lbl-card-table td {
+    border-bottom: 0.2mm solid #ccc4b8;
+    height: 5.5mm;
+    padding: 0 1.5mm;
+}
+.lbl-card-foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3mm;
+    padding-top: 2mm;
+    border-top: 0.25mm solid #d8d0c5;
+}
+.lbl-card-foot .lbl-qr { width: 15mm; height: 15mm; }
+.lbl-card-foot .lbl-bc { height: 8mm; }
+
+.empty-stage {
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--ink-soft);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1120px) {
+    .studio { grid-template-columns: 1fr; }
+    .studio-side {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .picker-list { max-height: 260px; }
+}
+
+/* ---------- Print ---------- */
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    .no-print { display: none !important; }
+    html, body, .labels-body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .studio { display: block; }
+    .studio-stage {
+        display: block;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+    .sheets { display: block; }
+    .sheet {
+        box-shadow: none !important;
+        margin: 0 !important;
+        page-break-after: always;
+        break-after: page;
+    }
+    .sheet:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+}
