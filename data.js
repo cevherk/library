@@ -544,7 +544,7 @@ const libraryData = [
         "author": "PHİLİP KOTLER",
         "pages": "223",
         "publisher": "optimist yayınları",
-        "ibrahimRead": "",
+        "ibrahimRead": "08.04.2025",
         "esraRead": "",
         "notes": ""
     },
@@ -591,7 +591,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "",
         "esraRead": "",
-        "notes": ""
+        "notes": "Nasıl 126 sayfa olabiliyor?"
     },
     {
         "title": "TOPRAK ANA",
@@ -616,7 +616,7 @@ const libraryData = [
         "author": "ALİ FUAD BAŞGİL",
         "pages": "80",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -697,7 +697,7 @@ const libraryData = [
         "author": "ÖZHAN ATALAY",
         "pages": "270",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -1014,7 +1014,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "",
         "esraRead": "",
-        "notes": ""
+        "notes": "84 sayfalık versiyonu nerede bakılacak"
     },
     {
         "title": "EVRAK KÜREK SEKTÖRDEN ARKADAŞLARA GİRİŞ 101",
@@ -1030,7 +1030,7 @@ const libraryData = [
         "author": "MONTAİGNE",
         "pages": "245",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -1093,7 +1093,7 @@ const libraryData = [
         "author": "HÜSEYİN NİHAL ATSIZ",
         "pages": "87",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -1318,9 +1318,9 @@ const libraryData = [
         "author": "ZAFER GÜRLER",
         "pages": "232",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
-        "notes": "TEKRAR OKUNACAK"
+        "notes": ""
     },
     {
         "title": "VATAN YAHUT SİLİSTRE",
@@ -1455,7 +1455,7 @@ const libraryData = [
         "publisher": "",
         "ibrahimRead": "",
         "esraRead": "",
-        "notes": ""
+        "notes": "Çocuk kitabı"
     },
     {
         "title": "DUNE",
@@ -1704,8 +1704,8 @@ const libraryData = [
         "title": "GENÇLİK",
         "author": "JOSEPH CONRAD",
         "pages": "53",
-        "publisher": "",
-        "ibrahimRead": "",
+        "publisher": "Can Yayınları",
+        "ibrahimRead": "11.03.2023",
         "esraRead": "",
         "notes": ""
     },
@@ -2119,7 +2119,7 @@ const libraryData = [
         "author": "HÜSEYİN NİHAL ATSIZ",
         "pages": "308",
         "publisher": "ötüken yayınları",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -2200,8 +2200,8 @@ const libraryData = [
         "author": "YUSUF ATILGAN",
         "pages": "190",
         "publisher": "can yayınları",
-        "ibrahimRead": "",
-        "esraRead": "",
+        "ibrahimRead": "22.01.2021",
+        "esraRead": "28.08.2023",
         "notes": "aynı kitaptan iki tane var biri esranın biri ibrahimin kitaplığından geldi."
     },
     {
@@ -2533,7 +2533,7 @@ const libraryData = [
         "author": "PEDRO DOMİNGOS",
         "pages": "413",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -2956,7 +2956,7 @@ const libraryData = [
         "author": "ALEKSANDR YAKUBOVSKİY",
         "pages": "92",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
         "notes": ""
     },
@@ -2965,9 +2965,9 @@ const libraryData = [
         "author": "YUSUF AKÇURA",
         "pages": "65",
         "publisher": "",
-        "ibrahimRead": "",
+        "ibrahimRead": "Okundu",
         "esraRead": "",
-        "notes": ""
+        "notes": "Yayını kontrol et"
     },
     {
         "title": "YÜZ FIKRA YÜZ TARİH",
