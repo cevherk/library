@@ -2,7 +2,7 @@
 
 A personal library of 470+ books, built for İbrahim and Esra to keep track of what they own, what they've read, and when.
 
-**🌐 Live:** [cevherk.github.io/library](https://cevherk.github.io/library/)
+**🌐 Live:** [library.cevher.net](https://library.cevher.net/)
 
 ## ✨ Features
 

@@ -228,6 +228,13 @@
             </button>
         </article>`;
 
+    const describeRead = (read) => {
+        if (!read) return 'Not read yet';
+        if (read.date) return `Finished ${formatDate(read.date)}`;
+        if (/^\d{4}$/.test(read.raw)) return `Finished in ${read.raw}`;
+        return 'Finished · date unknown';
+    };
+
     const readRowHtml = (id) => {
         const r = READERS[id];
         return (book) => {
@@ -237,7 +244,7 @@
                     <span class="badge badge-${id} ${read ? 'is-read' : ''}" aria-hidden="true">${r.initial}</span>
                     <div>
                         <strong>${r.name}</strong>
-                        <span>${read ? (read.date ? `Finished ${formatDate(read.date)}` : `Finished · ${escapeHtml(read.raw)}`) : 'Not read yet'}</span>
+                        <span>${escapeHtml(describeRead(read))}</span>
                     </div>
                 </div>`;
         };
