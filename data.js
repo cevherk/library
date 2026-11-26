@@ -1830,10 +1830,10 @@ const libraryData = [
         "title": "LAGÜN",
         "author": "JOSEPH CONRAD",
         "pages": "50",
-        "publisher": "",
-        "ibrahimRead": "",
+        "publisher": "Can Yayınları",
+        "ibrahimRead": "26.11.2026",
         "esraRead": "",
-        "notes": ""
+        "notes": "Laciver Klasikler serisi"
     },
     {
         "title": "ÖLÜNÜN SIRRI",
